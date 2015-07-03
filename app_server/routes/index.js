@@ -1,9 +1,8 @@
 var express = require('express');
 var router = express.Router();
+var ctrlApp = require('../controllers/index');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+router.get('/', ctrlApp.angularApp);
 
 module.exports = router;
