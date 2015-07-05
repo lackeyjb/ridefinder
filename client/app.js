@@ -4,7 +4,7 @@ function configRoutes ($httpProvider, $stateProvider, $urlRouterProvider, $locat
   $stateProvider
     .state('home', {
       url: '/',
-      templateUrl: './templates/home.html',
+      templateUrl: './views/home.html',
       controller: 'homeCtrl',
       controllerAs: 'vm'
     });
