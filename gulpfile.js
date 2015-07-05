@@ -47,8 +47,6 @@ gulp.task('nodemon', function() {
     });
 });
 
-gulp.task('deploy', ['sass', 'angular']);
-
 gulp.task('default', ['nodemon']);
 
 
