@@ -1,4 +1,4 @@
 node_modules
-client/assets/libs
+bower_components
 client/dist
 .DS_Store
