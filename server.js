@@ -2,8 +2,9 @@ var express    = require('express');
 var path       = require('path');
 var logger     = require('morgan');
 var bodyParser = require('body-parser');
-var config     = require('./config');
-
+var cors       = require('cors');
+var port       = process.env.PORT || 3000;
+require('dotenv').load();
 var app = express();
 
 app.use(logger('dev'));
