@@ -110,7 +110,6 @@ module.exports.login = function (req, res) {
 
 module.exports.signup = function (req, res) {
   var user         = new User();
-  user.displayName = req.body.displayName;
   user.email       = req.body.email;
   user.password    = req.body.password;
 

@@ -8,7 +8,7 @@ router.post('/auth/signup', usersCtrl.signup);
 router.post('/auth/facebook', usersCtrl.fbLogin);
 
 // authentication middleware
-router.use(usersCtrl.isAuthenticated);
+//router.use(usersCtrl.isAuthenticated);
 
 // remove facebook from account
 router.get('/auth/unlink/:provider', usersCtrl.unlinkProvider);
