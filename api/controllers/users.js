@@ -98,10 +98,10 @@ module.exports.login = function (req, res) {
 };
 
 module.exports.signup = function (req, res) {
-  var user = new User();
+  var user         = new User();
   user.displayName = req.body.displayName;
-  user.email = req.body.email;
-  user.password = req.body.password;
+  user.email       = req.body.email;
+  user.password    = req.body.password;
 
   user.save(function (err) {
     if (err) {
@@ -122,7 +122,7 @@ module.exports.signup = function (req, res) {
 module.exports.fbLogin = function(req, res) {
 
   var accessTokenUrl = 'https://graph.facebook.com/v2.3/oauth/access_token';
-  var graphApiUrl = 'https://graph.facebook.com/v2.3/me';
+  var graphApiUrl    = 'https://graph.facebook.com/v2.3/me';
   var params = {
     code: req.body.code,
     client_id: req.body.clientId,
@@ -131,7 +131,12 @@ module.exports.fbLogin = function(req, res) {
   };
 
   // Exchange authorization code for access token.
-  request.get({ url: accessTokenUrl, qs: params, json: true }, function(err, response, accessToken) {
+  request.get({
+    url: accessTokenUrl,
+    qs: params,
+    json: true
+  }, function(err, response, accessToken) {
+
     if (response.statusCode !== 200) {
       return sendJsonResponse(res, 500, {
         message: accessToken.error.message
@@ -139,7 +144,12 @@ module.exports.fbLogin = function(req, res) {
     }
 
     // Retrieve profile information about the current user.
-    request.get({ url: graphApiUrl, qs: accessToken, json: true }, function(err, response, profile) {
+    request.get({
+      url: graphApiUrl,
+      qs: accessToken,
+      json: true
+    }, function(err, response, profile) {
+
       if (response.statusCode !== 200) {
         return sendJsonResponse(res, 500, {
           message: profile.error.message
@@ -158,9 +168,10 @@ module.exports.fbLogin = function(req, res) {
             if (!user) {
               return res.status(400).send({ message: 'User not found' });
             }
-            user.facebook = profile.id;
-            user.picture = user.picture || 'https://graph.facebook.com/v2.3/' + profile.id + '/picture?type=large';
+            user.facebook    = profile.id;
             user.displayName = user.displayName || profile.name;
+            user.picture     = user.picture || ('https://graph.facebook.com/v2.3/' +
+                                                profile.id + '/picture?type=large');
             user.save(function() {
               var token = createJWT(user);
               res.send({ token: token });
@@ -175,8 +186,8 @@ module.exports.fbLogin = function(req, res) {
             return res.send({ token: token });
           }
           var user = new User();
-          user.facebook = profile.id;
-          user.picture = 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
+          user.facebook    = profile.id;
+          user.picture     = 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
           user.displayName = profile.name;
           user.save(function() {
             var token = createJWT(user);

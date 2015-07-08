@@ -13,7 +13,7 @@ var paths = {
   scss         : 'client/assets/scss/*.scss',
   css          : 'client/assets/css',
   server       : 'server.js',
-  api          : 'app_api/**/*.js',
+  api          : 'api/**/*.js',
   client       : 'client/',
   clientMain   : 'client/*.js',
   clientScripts: 'client/scripts/**/*.js',

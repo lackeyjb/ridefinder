@@ -6,9 +6,9 @@ var cors       = require('cors');
 var port       = process.env.PORT || 3000;
 
 require('dotenv').load();
-require('./app_api/models/db');
+require('./api/models/db');
 
-var apiRoutes = require('./app_api/routes/index');
+var apiRoutes = require('./api/routes/index');
 var app = express();
 
 app.use(cors());
