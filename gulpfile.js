@@ -41,7 +41,7 @@ gulp.task('angular', function() {
   gulp.src([paths.clientMain, paths.clientScripts])
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
-    .pipe(concat(paths.clientMain))
+    .pipe(concat(paths.angularMin))
     .pipe(uglify())
     .pipe(gulp.dest(paths.dist));
 });

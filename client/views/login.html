@@ -1,0 +1,11 @@
+<form method="post" ng-submit="vm.login()" name="loginForm">
+  <input type="email" name="email" placeholder="Email" ng-model="vm.email" required autofocus>
+  <br>
+  <input type="password" name="password" placeholder="Password" ng-model="vm.password" required>
+  <br>
+  <button type="submit" ng-disabled="loginForm.$invalid">Log in</button>
+</form>
+
+<button ng-click="vm.authenticate('facebook')">
+  Sign in with Facebook
+</button>

@@ -4,6 +4,7 @@ var jwt         = require('jwt-simple');
 var moment      = require('moment');
 var qs          = require('querystring');
 var request     = require('request');
+
 var tokenSecret = process.env.TOKEN_SECRET;
 var fbSecret    = process.env.FACEBOOK_SECRET;
 
@@ -80,21 +81,31 @@ module.exports.updateCurrentUser = function (req, res) {
 };
 
 module.exports.login = function (req, res) {
-  User.findOne({ email: req.body.email }, '+password', function (err, user) {
-    if (!user) {
-      return sendJsonResponse(res, 401, {
-        message: 'Wrong email and/or password'
-      });
-    }
-    user.comparePassword(req.body.password, function (err, isMatch) {
-      if (!isMatch) {
-        return sendJsonResponse(res, 401, {
-          message: 'Wrong email and/or password'
-        });
+  User
+    .findOne({ email: req.body.email })
+    .select('email displayName password')
+    .exec(
+      function (err, user) {
+        if (err) throw err;
+
+        if (!user) {
+          return sendJsonResponse(res, 401, {
+            message: 'Wrong email and/or password'
+          });
+        } else if (user) {
+          var validPassword = user.comparePassword(req.body.password);
+          if (!validPassword) {
+            return sendJsonResponse(res, 401, {
+              message: 'Wrong email and/or password'
+            });
+          } else {
+            sendJsonResponse(res, 200, {
+              token: createJWT(user)
+            });
+          }
+        }
       }
-      res.send({ token: createJWT(user) });
-    });
-  });
+    );
 };
 
 module.exports.signup = function (req, res) {
@@ -126,7 +137,7 @@ module.exports.fbLogin = function(req, res) {
   var params = {
     code: req.body.code,
     client_id: req.body.clientId,
-    client_secret: config.FACEBOOK_SECRET,
+    client_secret: fbSecret,
     redirect_uri: req.body.redirectUri
   };
 
@@ -163,7 +174,7 @@ module.exports.fbLogin = function(req, res) {
             });
           }
           var token = req.headers.authorization.split(' ')[1];
-          var payload = jwt.decode(token, config.TOKEN_SECRET);
+          var payload = jwt.decode(token, tokenSecret);
           User.findById(payload.sub, function(err, user) {
             if (!user) {
               return res.status(400).send({ message: 'User not found' });
