@@ -1,0 +1,40 @@
+$facebook-color: #3b5998;
+$text-transform: uppercase;
+$icon-size: 2rem;
+
+.login-panel {
+  margin-top: 35%;
+  padding-top: 50px;
+  h3 {
+    margin-bottom: 25px;
+  }
+  input[type='password'] {
+    margin-bottom: 35px;
+  }
+
+  .button {
+    width: 100%;
+    text-transform: $text-transform;
+  }
+
+  .split.button {
+    padding-left: 70px;
+
+    &.facebook {
+      background: $facebook-color;
+    }
+    span {
+      background: darken( $facebook-color, 10%);
+
+      &:after {
+        border: none;
+        font-family: "foundation-icons";
+        content: "\f1c4";
+        font-size: $icon-size;
+        line-height: 0.25rem;
+        margin-left: -0.7rem;
+      }
+    }
+  }
+
+}
