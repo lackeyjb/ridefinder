@@ -5,7 +5,17 @@ var usersCtrl = require('../controllers/users');
 // users
 router.post('/auth/login', usersCtrl.login);
 router.post('/auth/signup', usersCtrl.signup);
-router.get('/me', usersCtrl.ensureAuthenticated, usersCtrl.readCurrentUser);
-router.put('/me', usersCtrl.ensureAuthenticated, usersCtrl.updateCurrentUser);
+router.post('/auth/facebook', usersCtrl.fbLogin);
+
+// authentication middleware
+router.use(usersCtrl.isAuthenticated);
+
+router.get('/auth/unlink/:provider', usersCtrl.unlinkProvider);
+router.get('/me', usersCtrl.readCurrentUser);
+router.put('/me', usersCtrl.updateCurrentUser);
+
+router.get('/users', usersCtrl.users);
+router.get('/users/:userId', usersCtrl.user);
+
 
 module.exports = router;
