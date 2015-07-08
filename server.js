@@ -1,9 +1,10 @@
-var express    = require('express');
-var path       = require('path');
-var logger     = require('morgan');
-var bodyParser = require('body-parser');
-var cors       = require('cors');
-var port       = process.env.PORT || 3000;
+var express     = require('express');
+var path        = require('path');
+var logger      = require('morgan');
+var bodyParser  = require('body-parser');
+var compression = require('compression');
+var cors        = require('cors');
+var port        = process.env.PORT || 3000;
 
 require('dotenv').load();
 require('./api/models/db');
@@ -11,14 +12,15 @@ require('./api/models/db');
 var apiRoutes = require('./api/routes/index');
 var app = express();
 
+app.use(compression());
 app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
-app.use(express.static(path.join(__dirname, 'client')));
-app.use('/bower_components', express.static(path.join(__dirname, 'bower_components')));
+app.use(express.static(path.join(__dirname, 'client'), { maxAge: 2628000000 }));
+app.use('/bower_components', express.static(path.join(__dirname, 'bower_components'), { maxAge: 2628000000 }));
 
 app.use('/api', apiRoutes);
 
