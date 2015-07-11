@@ -26,7 +26,8 @@ if (environment === 'production') {
   app.use(function (req, res) {
     res.sendFile(path.join(__dirname, '../../build', 'index.html'));
   });
-} else {
+}
+if (environment === 'development') {
   app.use(express.static(path.join(__dirname, '../client')));
   app.use(express.static(path.join(__dirname, '../../')));
   app.use(express.static(path.join(__dirname, '../../tmp')));
