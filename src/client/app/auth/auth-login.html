@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="large-6 large-centered columns end">
+    <div class="panel login-panel">
+
+      <h3 class="text-center">Login</h3>
+
+      <form method="post" ng-submit="vm.login()" name="loginForm">
+
+        <div class="row collapse">
+          <div class="small-12 columns">
+            <input type="email"
+                   name="email"
+                   placeholder="Email"
+                   ng-model="vm.email"
+                   required
+                   autofocus>
+          </div>
+        </div>
+
+        <div class="row collapse">
+          <div class="small-12 columns">
+            <input type="password"
+                   name="password"
+                   placeholder="Password"
+                   ng-model="vm.password"
+                   required>
+          </div>
+        </div>
+
+        <button class="button" type="submit" ng-disabled="loginForm.$invalid">
+          login
+        </button>
+
+      </form>
+
+      <button class="facebook button split" ng-click="vm.authenticate('facebook')">
+        <span></span>login in with facebook
+      </button>
+
+    </div>
+  </div>
+</div>

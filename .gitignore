@@ -1,4 +1,6 @@
 node_modules
 bower_components
-client/dist
+build/
 .DS_Store
+.env
+.tmp
