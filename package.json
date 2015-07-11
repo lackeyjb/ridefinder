@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node src/server/server.js",
-    "postinstall": "bower install && gulp build"
+    "postinstall": "gulp build"
   },
   "engines": {
     "node": "~0.12.4",
