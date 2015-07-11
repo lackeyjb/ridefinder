@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ridefinder</title>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet">
+    <!-- build:css styles/lib.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="/bower_components/foundation/css/foundation.css" />
+    <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css styles/app.css -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/.tmp/main.css">
+    <!-- endinject -->
+    <!-- endbuild -->
+
+  </head>
+  <body>
+    <div class="fixed">
+        <nav class="top-bar" data-topbar role="navigation"></nav>
+    </div>
+    <div ui-view></div>
+
+    <!-- build:js js/lib.js -->
+    <!-- bower:js -->
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/foundation/js/foundation.js"></script>
+    <script src="/bower_components/ui-router/release/angular-ui-router.js"></script>
+    <script src="/bower_components/underscore/underscore.js"></script>
+    <script src="/bower_components/satellizer/satellizer.js"></script>
+    <script src="/bower_components/angular-foundation/mm-foundation-tpls.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js js/app.js -->
+    <!-- inject:js -->
+    <script src="/src/client/app/app.module.js"></script>
+    <script src="/src/client/app/auth/auth.module.js"></script>
+    <script src="/src/client/app/home/home.module.js"></script>
+    <script src="/src/client/app/auth/auth-login.controller.js"></script>
+    <script src="/src/client/app/home/home.controller.js"></script>
+    <!-- endinject -->
+
+    <!-- inject:templates:js-->
+    <!-- endinject -->
+
+    <!-- endbuild -->
+  </body>
+</html>

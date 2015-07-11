@@ -82,11 +82,13 @@ module.exports.updateCurrentUser = function (req, res) {
 
 module.exports.login = function (req, res) {
   User
-    .findOne({ email: req.body.email })
+    .findOne({email: req.body.email})
     .select('email displayName password')
     .exec(
       function (err, user) {
-        if (err) throw err;
+        if (err) {
+          throw err;
+        }
 
         if (!user) {
           return sendJsonResponse(res, 401, {
@@ -134,10 +136,14 @@ module.exports.fbLogin = function(req, res) {
   var accessTokenUrl = 'https://graph.facebook.com/v2.3/oauth/access_token';
   var graphApiUrl    = 'https://graph.facebook.com/v2.3/me';
   var params = {
+    // jscs:disable
+    /* jshint ignore:start */
     code: req.body.code,
     client_id: req.body.clientId,
     client_secret: fbSecret,
     redirect_uri: req.body.redirectUri
+    /* jshint ignore:end */
+    // jscs:enable
   };
 
   // Exchange authorization code for access token.
@@ -166,7 +172,7 @@ module.exports.fbLogin = function(req, res) {
         });
       }
       if (req.headers.authorization) {
-        User.findOne({ facebook: profile.id }, function(err, existingUser) {
+        User.findOne({facebook: profile.id}, function(err, existingUser) {
           if (existingUser) {
             return sendJsonResponse(res, 409, {
               message: 'There is already a Facebook account that belongs to you'
@@ -176,7 +182,7 @@ module.exports.fbLogin = function(req, res) {
           var payload = jwt.decode(token, tokenSecret);
           User.findById(payload.sub, function(err, user) {
             if (!user) {
-              return res.status(400).send({ message: 'User not found' });
+              return res.status(400).send({message: 'User not found'});
             }
             user.facebook    = profile.id;
             user.displayName = user.displayName || profile.name;
@@ -184,16 +190,16 @@ module.exports.fbLogin = function(req, res) {
                                                 profile.id + '/picture?type=large');
             user.save(function() {
               var token = createJWT(user);
-              res.send({ token: token });
+              res.send({token: token});
             });
           });
         });
       } else {
         // Create a new user account or return an existing one.
-        User.findOne({ facebook: profile.id }, function(err, existingUser) {
+        User.findOne({facebook: profile.id}, function(err, existingUser) {
           if (existingUser) {
             var token = createJWT(existingUser);
-            return res.send({ token: token });
+            return res.send({token: token});
           }
           var user = new User();
           user.facebook    = profile.id;
@@ -201,7 +207,7 @@ module.exports.fbLogin = function(req, res) {
           user.displayName = profile.name;
           user.save(function() {
             var token = createJWT(user);
-            res.send({ token: token });
+            res.send({token: token});
           });
         });
       }
