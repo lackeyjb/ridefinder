@@ -6,8 +6,6 @@ var compression = require('compression');
 var cors        = require('cors');
 var port        = process.env.PORT || 3000;
 
-var environment = process.env.NODE_ENV;
-
 require('dotenv').load();
 require('./api/models/db');
 
@@ -21,27 +19,34 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use('/api', apiRoutes);
 
-if (environment === 'production') {
+if (app.get('env') === 'production') {
   app.use(express.static(path.join(__dirname, '../../build')));
   app.use(function (req, res) {
     res.sendFile(path.join(__dirname, '../../build', 'index.html'));
   });
+
+  // catch 404 and forward to error handler
+  app.use(function(req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+  });
 }
-if (environment === 'development') {
+if (app.get('env') === 'development') {
   app.use(express.static(path.join(__dirname, '../client')));
   app.use(express.static(path.join(__dirname, '../../')));
   app.use(express.static(path.join(__dirname, '../../tmp')));
   app.use(function (req, res) {
     res.sendFile(path.join(__dirname, '../client', 'index.html'));
   });
-}
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+  // catch 404 and forward to error handler
+  app.use(function(req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+  });
+}
 
 app.listen(port);
 console.log('Server started on port: ' + port);
