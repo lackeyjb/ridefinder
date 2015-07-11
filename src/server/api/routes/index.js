@@ -12,9 +12,12 @@ router.post('/auth/facebook', usersCtrl.fbLogin);
 
 // remove facebook from account
 router.get('/auth/unlink/:provider', usersCtrl.unlinkProvider);
+
 // current user
 router.get('/me', usersCtrl.readCurrentUser);
 router.put('/me', usersCtrl.updateCurrentUser);
+
+// jscs:disable
 // users
 router.get('/users', usersCtrl.users);
 router.get('/users/:userId', usersCtrl.user);
