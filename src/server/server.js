@@ -19,10 +19,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use('/api', apiRoutes);
 
-if (app.get('env') === 'production') {
-  app.use(express.static(path.join(__dirname, '../../build')));
+if (app.get('env') === 'development') {
+  app.use(express.static(path.join(__dirname, '../client')));
+  app.use(express.static(path.join(__dirname, '../../')));
+  app.use(express.static(path.join(__dirname, '../../tmp')));
   app.use(function (req, res) {
-    res.sendFile(path.join(__dirname, '../../build', 'index.html'));
+    res.sendFile(path.join(__dirname, '../client', 'index.html'));
   });
 
   // catch 404 and forward to error handler
@@ -32,12 +34,11 @@ if (app.get('env') === 'production') {
     next(err);
   });
 }
-if (app.get('env') === 'development') {
-  app.use(express.static(path.join(__dirname, '../client')));
-  app.use(express.static(path.join(__dirname, '../../')));
-  app.use(express.static(path.join(__dirname, '../../tmp')));
+
+if (app.get('env') === 'production') {
+  app.use(express.static(path.join(__dirname, '../../build')));
   app.use(function (req, res) {
-    res.sendFile(path.join(__dirname, '../client', 'index.html'));
+    res.sendFile(path.join(__dirname, '../../build', 'index.html'));
   });
 
   // catch 404 and forward to error handler
