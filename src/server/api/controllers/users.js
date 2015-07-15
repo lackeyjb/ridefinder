@@ -52,16 +52,7 @@ module.exports.isAuthenticated = function (req, res, next) {
 
 module.exports.readCurrentUser = function (req, res) {
   User.findById(req.user, function (err, user) {
-    if (!user) {
-      return sendJsonResponse(res, 400, {
-        message: 'User not found'
-      });
-    }
-    user.displayName = req.body.displayName || user.displayName;
-    user.email       = req.body.email || user.email;
-    user.save(function (err) {
-      sendJsonResponse(res, 200, user);
-    });
+    sendJsonReponse(res, 200, user);
   });
 };
 
